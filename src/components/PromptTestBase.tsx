@@ -79,6 +79,7 @@ interface PromptTestBaseProps {
   description: string;
   templates: PromptTemplate[];
   defaultResponseFormat?: string;
+  apiEndpoint?: string;
   children?: React.ReactNode;
 }
 
@@ -88,6 +89,7 @@ export default function PromptTestBase({
   description,
   templates,
   defaultResponseFormat = 'text',
+  apiEndpoint = '/api/prompt',
   children,
 }: PromptTestBaseProps) {
   const [request, setRequest] = useState<PromptTestRequest>({
@@ -159,7 +161,7 @@ export default function PromptTestBase({
     try {
       abortControllerRef.current = new AbortController();
 
-      const response = await fetch('/api/prompt', {
+      const response = await fetch(apiEndpoint, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
