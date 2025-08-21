@@ -1,5 +1,704 @@
 ---
-description: 
-globs: 
 alwaysApply: true
 ---
+
+# LangChain 测试平台开发规范
+
+## 🏗️ 项目架构
+
+### 技术栈
+- **框架**: Next.js 14 (App Router)
+- **语言**: TypeScript (严格模式)
+- **样式**: Tailwind CSS + CSS Variables
+- **状态管理**: React Hooks (useState, useEffect, useRef)
+- **AI框架**: LangChain + OpenAI
+- **UI组件**: Lucide React Icons
+- **代码质量**: ESLint + Prettier + Husky
+
+### 目录结构
+```
+src/
+├── app/                    # Next.js App Router 页面
+│   ├── api/               # API 路由
+│   ├── layout.tsx         # 根布局
+│   └── [feature]/page.tsx # 功能页面
+├── components/            # 可复用组件
+│   ├── Sidebar.tsx        # 导航侧边栏
+│   └── TestPageLayout.tsx # 测试页面通用布局
+└── lib/                   # 工具函数
+    └── utils.ts           # Tailwind 类名合并工具
+```
+
+## 📝 编码规范
+
+### TypeScript 规范
+1. **严格类型定义**: 所有组件 props 必须定义接口
+   ```tsx
+   interface ComponentNameProps {
+     title: string;
+     description?: string;
+     children: React.ReactNode;
+   }
+   
+   export default function ComponentName({ title, description, children }: ComponentNameProps) {
+     // 实现
+   }
+   ```
+
+2. **组件命名**: 使用 PascalCase，文件名与组件名一致
+   - ✅ `TestPageLayout.tsx` -> `TestPageLayout`
+   - ✅ `PromptTestPage` -> `page.tsx` (App Router 页面)
+
+3. **接口命名**: 组件 props 接口以 `Props` 结尾
+   - ✅ `TestPageLayoutProps`
+   - ✅ `PromptTestRequest`
+
+### React 组件规范
+1. **函数组件**: 使用函数声明 + export default
+   ```tsx
+   export default function ComponentName() {
+     return <div>...</div>;
+   }
+   ```
+
+2. **Hook 使用顺序**:
+   ```tsx
+   // 1. State hooks
+   const [state, setState] = useState();
+   
+   // 2. Ref hooks  
+   const refName = useRef();
+   
+   // 3. Effect hooks
+   useEffect(() => {}, []);
+   
+   // 4. Custom hooks 和其他逻辑
+   ```
+
+3. **事件处理**: 使用 `handle` 前缀
+   ```tsx
+   const handleSubmit = async () => {};
+   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {};
+   ```
+
+### 样式规范
+1. **Tailwind CSS**: 优先使用 Tailwind 类名
+   ```tsx
+   // ✅ 推荐
+   <div className="flex h-screen bg-gray-50">
+   
+   // ❌ 避免内联样式
+   <div style={{display: 'flex'}}>
+   ```
+
+2. **条件样式**: 使用模板字符串或 cn() 工具函数
+   ```tsx
+   // 简单条件
+   className={`px-4 py-2 ${isActive ? 'bg-blue-500' : 'bg-gray-200'}`}
+   
+   // 复杂条件使用 cn()
+   className={cn(
+     "px-4 py-2 rounded-md",
+     isActive && "bg-blue-500 text-white",
+     isDisabled && "opacity-50 cursor-not-allowed"
+   )}
+   ```
+
+3. **响应式设计**: 遵循 mobile-first 原则
+   ```tsx
+   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+   ```
+
+4. **颜色使用**: 优先使用语义化颜色变量
+   ```tsx
+   // ✅ 使用语义化颜色
+   <button className="bg-primary text-primary-foreground">
+   
+   // ✅ 使用灰度系统
+   <p className="text-gray-600">
+   
+   // ✅ 状态颜色
+   <div className="bg-blue-50 border border-blue-200 text-blue-800">
+   ```
+
+## 🎯 页面开发规范
+
+### 布局组件使用
+1. **测试页面**: 必须使用 `TestPageLayout` 包装
+   ```tsx
+   export default function FeaturePage() {
+     return (
+       <TestPageLayout 
+         title="功能标题" 
+         description="功能描述"
+       >
+         <div className="p-6 space-y-6">
+           {/* 页面内容 */}
+         </div>
+       </TestPageLayout>
+     );
+   }
+   ```
+
+2. **首页**: 直接使用 Sidebar + main 布局
+   ```tsx
+   <div className="flex h-screen bg-gray-50">
+     <Sidebar />
+     <main className="flex-1 overflow-y-auto">
+       {/* 内容 */}
+     </main>
+   </div>
+   ```
+
+### API 路由规范
+1. **文件结构**: 使用 `route.ts` 文件
+   ```
+   src/app/api/
+   ├── prompt/route.ts
+   └── [feature]/route.ts
+   ```
+
+2. **请求处理**: 包含完整的错误处理
+   ```tsx
+   export async function POST(request: NextRequest) {
+     try {
+       const body = await request.json();
+       // 处理逻辑
+       return NextResponse.json(result);
+     } catch (error) {
+       console.error('API Error:', error);
+       return NextResponse.json(
+         { error: '处理请求时发生错误', details: error.message },
+         { status: 500 }
+       );
+     }
+   }
+   ```
+
+3. **流式响应**: 使用 ReadableStream
+   ```tsx
+   const readable = new ReadableStream({
+     async start(controller) {
+       // 流式处理逻辑
+     }
+   });
+   ```
+
+## 🔧 LangChain 集成规范
+
+### 模型配置
+1. **环境变量**: 使用 `process.env` 配置
+   ```tsx
+   const chat = new ChatOpenAI({
+     openAIApiKey: process.env.OPEN_API_KEY,
+     modelName: 'gpt-3.5-turbo',
+     configuration: {
+       baseURL: process.env.OPEN_API_BASE_URL,
+     },
+   });
+   ```
+
+2. **消息构建**: 使用 LangChain 消息类
+   ```tsx
+   const messages = [];
+   if (systemMessage) {
+     messages.push(new SystemMessage(systemMessage));
+   }
+   messages.push(new HumanMessage(prompt));
+   ```
+
+### 错误处理
+1. **API 调用**: 包含超时和取消机制
+   ```tsx
+   const abortController = new AbortController();
+   
+   try {
+     const response = await fetch('/api/endpoint', {
+       signal: abortController.signal,
+     });
+   } catch (error) {
+     if (error.name !== 'AbortError') {
+       // 处理其他错误
+     }
+   }
+   ```
+
+## 📦 状态管理规范
+
+### 本地状态
+1. **简单状态**: 使用 useState
+   ```tsx
+   const [isLoading, setIsLoading] = useState(false);
+   const [data, setData] = useState<DataType[]>([]);
+   ```
+
+2. **复杂对象**: 使用对象状态 + 展开操作符
+   ```tsx
+   const [request, setRequest] = useState<RequestType>({
+     prompt: '',
+     temperature: 0.7,
+     // ...其他字段
+   });
+   
+   const updateRequest = (updates: Partial<RequestType>) => {
+     setRequest(prev => ({ ...prev, ...updates }));
+   };
+   ```
+
+### 持久化状态
+1. **localStorage**: 用于用户偏好和历史记录
+   ```tsx
+   // 保存
+   localStorage.setItem('key', JSON.stringify(data));
+   
+   // 读取
+   const saved = localStorage.getItem('key');
+   if (saved) {
+     setData(JSON.parse(saved));
+   }
+   ```
+
+## 🎨 用户体验规范
+
+### 加载状态
+1. **按钮状态**: 禁用 + 加载文本
+   ```tsx
+   <button
+     disabled={isLoading}
+     className="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed"
+   >
+     {isLoading ? '处理中...' : '开始处理'}
+   </button>
+   ```
+
+2. **流式内容**: 实时更新显示
+   ```tsx
+   {request.responseFormat === 'markdown' ? (
+     <Streamdown>{response}</Streamdown>
+   ) : (
+     <pre className="whitespace-pre-wrap text-sm">{response}</pre>
+   )}
+   ```
+
+### 表单处理
+1. **输入验证**: 前端验证 + 后端验证
+   ```tsx
+   const isValid = request.prompt.trim().length > 0;
+   
+   <button
+     onClick={handleSubmit}
+     disabled={!isValid || isLoading}
+   >
+   ```
+
+2. **用户反馈**: 成功/错误提示
+   ```tsx
+   // 成功提示
+   <div className="bg-green-50 border border-green-200 text-green-800">
+   
+   // 错误提示  
+   <div className="bg-red-50 border border-red-200 text-red-800">
+   
+   // 信息提示
+   <div className="bg-blue-50 border border-blue-200 text-blue-800">
+   ```
+
+## 🚀 性能优化
+
+### 组件优化
+1. **避免不必要的重渲染**: 合理使用 useCallback, useMemo
+2. **大列表优化**: 限制显示数量，使用分页或虚拟滚动
+3. **图片优化**: 使用 Next.js Image 组件
+
+### 数据处理
+1. **分页加载**: 历史记录限制显示数量
+   ```tsx
+   {history.slice(0, 10).map((item) => (...))}
+   ```
+
+2. **防抖处理**: 搜索和输入处理使用防抖
+
+## 🔒 安全规范
+
+### 数据验证
+1. **输入验证**: 前后端都要验证
+2. **XSS 防护**: 避免 dangerouslySetInnerHTML
+3. **API 安全**: 使用环境变量存储敏感信息
+
+### 错误处理
+1. **不暴露内部信息**: 生产环境错误信息要脱敏
+2. **日志记录**: 记录错误但不显示给用户
+
+## 📋 代码质量
+
+### 提交规范
+- 使用 Conventional Commits 格式
+- 通过 Husky + lint-staged 确保代码质量
+- 提交前自动运行 ESLint + Prettier
+
+### 文档规范
+- 复杂函数添加 JSDoc 注释
+- README 保持更新
+- API 接口要有完整的类型定义
+
+## 🎯 最佳实践总结
+
+1. **组件设计**: 单一职责，高内聚低耦合
+2. **类型安全**: 充分利用 TypeScript 类型系统
+3. **用户体验**: 加载状态、错误提示、响应式设计
+4. **性能优化**: 避免不必要的重渲染和网络请求
+5. **代码复用**: 提取公共组件和工具函数
+6. **错误处理**: 完善的错误边界和用户友好的错误提示
+
+遵循这些规范，确保代码质量和开发效率！
+
+# LangChain 测试平台开发规范
+
+## 🏗️ 项目架构
+
+### 技术栈
+- **框架**: Next.js 14 (App Router)
+- **语言**: TypeScript (严格模式)
+- **样式**: Tailwind CSS + CSS Variables
+- **状态管理**: React Hooks (useState, useEffect, useRef)
+- **AI框架**: LangChain + OpenAI
+- **UI组件**: Lucide React Icons
+- **代码质量**: ESLint + Prettier + Husky
+
+### 目录结构
+```
+src/
+├── app/                    # Next.js App Router 页面
+│   ├── api/               # API 路由
+│   ├── layout.tsx         # 根布局
+│   └── [feature]/page.tsx # 功能页面
+├── components/            # 可复用组件
+│   ├── Sidebar.tsx        # 导航侧边栏
+│   └── TestPageLayout.tsx # 测试页面通用布局
+└── lib/                   # 工具函数
+    └── utils.ts           # Tailwind 类名合并工具
+```
+
+## 📝 编码规范
+
+### TypeScript 规范
+1. **严格类型定义**: 所有组件 props 必须定义接口
+   ```tsx
+   interface ComponentNameProps {
+     title: string;
+     description?: string;
+     children: React.ReactNode;
+   }
+   
+   export default function ComponentName({ title, description, children }: ComponentNameProps) {
+     // 实现
+   }
+   ```
+
+2. **组件命名**: 使用 PascalCase，文件名与组件名一致
+   - ✅ `TestPageLayout.tsx` -> `TestPageLayout`
+   - ✅ `PromptTestPage` -> `page.tsx` (App Router 页面)
+
+3. **接口命名**: 组件 props 接口以 `Props` 结尾
+   - ✅ `TestPageLayoutProps`
+   - ✅ `PromptTestRequest`
+
+### React 组件规范
+1. **函数组件**: 使用函数声明 + export default
+   ```tsx
+   export default function ComponentName() {
+     return <div>...</div>;
+   }
+   ```
+
+2. **Hook 使用顺序**:
+   ```tsx
+   // 1. State hooks
+   const [state, setState] = useState();
+   
+   // 2. Ref hooks  
+   const refName = useRef();
+   
+   // 3. Effect hooks
+   useEffect(() => {}, []);
+   
+   // 4. Custom hooks 和其他逻辑
+   ```
+
+3. **事件处理**: 使用 `handle` 前缀
+   ```tsx
+   const handleSubmit = async () => {};
+   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {};
+   ```
+
+### 样式规范
+1. **Tailwind CSS**: 优先使用 Tailwind 类名
+   ```tsx
+   // ✅ 推荐
+   <div className="flex h-screen bg-gray-50">
+   
+   // ❌ 避免内联样式
+   <div style={{display: 'flex'}}>
+   ```
+
+2. **条件样式**: 使用模板字符串或 cn() 工具函数
+   ```tsx
+   // 简单条件
+   className={`px-4 py-2 ${isActive ? 'bg-blue-500' : 'bg-gray-200'}`}
+   
+   // 复杂条件使用 cn()
+   className={cn(
+     "px-4 py-2 rounded-md",
+     isActive && "bg-blue-500 text-white",
+     isDisabled && "opacity-50 cursor-not-allowed"
+   )}
+   ```
+
+3. **响应式设计**: 遵循 mobile-first 原则
+   ```tsx
+   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+   ```
+
+4. **颜色使用**: 优先使用语义化颜色变量
+   ```tsx
+   // ✅ 使用语义化颜色
+   <button className="bg-primary text-primary-foreground">
+   
+   // ✅ 使用灰度系统
+   <p className="text-gray-600">
+   
+   // ✅ 状态颜色
+   <div className="bg-blue-50 border border-blue-200 text-blue-800">
+   ```
+
+## 🎯 页面开发规范
+
+### 布局组件使用
+1. **测试页面**: 必须使用 `TestPageLayout` 包装
+   ```tsx
+   export default function FeaturePage() {
+     return (
+       <TestPageLayout 
+         title="功能标题" 
+         description="功能描述"
+       >
+         <div className="p-6 space-y-6">
+           {/* 页面内容 */}
+         </div>
+       </TestPageLayout>
+     );
+   }
+   ```
+
+2. **首页**: 直接使用 Sidebar + main 布局
+   ```tsx
+   <div className="flex h-screen bg-gray-50">
+     <Sidebar />
+     <main className="flex-1 overflow-y-auto">
+       {/* 内容 */}
+     </main>
+   </div>
+   ```
+
+### API 路由规范
+1. **文件结构**: 使用 `route.ts` 文件
+   ```
+   src/app/api/
+   ├── prompt/route.ts
+   └── [feature]/route.ts
+   ```
+
+2. **请求处理**: 包含完整的错误处理
+   ```tsx
+   export async function POST(request: NextRequest) {
+     try {
+       const body = await request.json();
+       // 处理逻辑
+       return NextResponse.json(result);
+     } catch (error) {
+       console.error('API Error:', error);
+       return NextResponse.json(
+         { error: '处理请求时发生错误', details: error.message },
+         { status: 500 }
+       );
+     }
+   }
+   ```
+
+3. **流式响应**: 使用 ReadableStream
+   ```tsx
+   const readable = new ReadableStream({
+     async start(controller) {
+       // 流式处理逻辑
+     }
+   });
+   ```
+
+## 🔧 LangChain 集成规范
+
+### 模型配置
+1. **环境变量**: 使用 `process.env` 配置
+   ```tsx
+   const chat = new ChatOpenAI({
+     openAIApiKey: process.env.OPEN_API_KEY,
+     modelName: 'gpt-3.5-turbo',
+     configuration: {
+       baseURL: process.env.OPEN_API_BASE_URL,
+     },
+   });
+   ```
+
+2. **消息构建**: 使用 LangChain 消息类
+   ```tsx
+   const messages = [];
+   if (systemMessage) {
+     messages.push(new SystemMessage(systemMessage));
+   }
+   messages.push(new HumanMessage(prompt));
+   ```
+
+### 错误处理
+1. **API 调用**: 包含超时和取消机制
+   ```tsx
+   const abortController = new AbortController();
+   
+   try {
+     const response = await fetch('/api/endpoint', {
+       signal: abortController.signal,
+     });
+   } catch (error) {
+     if (error.name !== 'AbortError') {
+       // 处理其他错误
+     }
+   }
+   ```
+
+## 📦 状态管理规范
+
+### 本地状态
+1. **简单状态**: 使用 useState
+   ```tsx
+   const [isLoading, setIsLoading] = useState(false);
+   const [data, setData] = useState<DataType[]>([]);
+   ```
+
+2. **复杂对象**: 使用对象状态 + 展开操作符
+   ```tsx
+   const [request, setRequest] = useState<RequestType>({
+     prompt: '',
+     temperature: 0.7,
+     // ...其他字段
+   });
+   
+   const updateRequest = (updates: Partial<RequestType>) => {
+     setRequest(prev => ({ ...prev, ...updates }));
+   };
+   ```
+
+### 持久化状态
+1. **localStorage**: 用于用户偏好和历史记录
+   ```tsx
+   // 保存
+   localStorage.setItem('key', JSON.stringify(data));
+   
+   // 读取
+   const saved = localStorage.getItem('key');
+   if (saved) {
+     setData(JSON.parse(saved));
+   }
+   ```
+
+## 🎨 用户体验规范
+
+### 加载状态
+1. **按钮状态**: 禁用 + 加载文本
+   ```tsx
+   <button
+     disabled={isLoading}
+     className="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed"
+   >
+     {isLoading ? '处理中...' : '开始处理'}
+   </button>
+   ```
+
+2. **流式内容**: 实时更新显示
+   ```tsx
+   {request.responseFormat === 'markdown' ? (
+     <Streamdown>{response}</Streamdown>
+   ) : (
+     <pre className="whitespace-pre-wrap text-sm">{response}</pre>
+   )}
+   ```
+
+### 表单处理
+1. **输入验证**: 前端验证 + 后端验证
+   ```tsx
+   const isValid = request.prompt.trim().length > 0;
+   
+   <button
+     onClick={handleSubmit}
+     disabled={!isValid || isLoading}
+   >
+   ```
+
+2. **用户反馈**: 成功/错误提示
+   ```tsx
+   // 成功提示
+   <div className="bg-green-50 border border-green-200 text-green-800">
+   
+   // 错误提示  
+   <div className="bg-red-50 border border-red-200 text-red-800">
+   
+   // 信息提示
+   <div className="bg-blue-50 border border-blue-200 text-blue-800">
+   ```
+
+## 🚀 性能优化
+
+### 组件优化
+1. **避免不必要的重渲染**: 合理使用 useCallback, useMemo
+2. **大列表优化**: 限制显示数量，使用分页或虚拟滚动
+3. **图片优化**: 使用 Next.js Image 组件
+
+### 数据处理
+1. **分页加载**: 历史记录限制显示数量
+   ```tsx
+   {history.slice(0, 10).map((item) => (...))}
+   ```
+
+2. **防抖处理**: 搜索和输入处理使用防抖
+
+## 🔒 安全规范
+
+### 数据验证
+1. **输入验证**: 前后端都要验证
+2. **XSS 防护**: 避免 dangerouslySetInnerHTML
+3. **API 安全**: 使用环境变量存储敏感信息
+
+### 错误处理
+1. **不暴露内部信息**: 生产环境错误信息要脱敏
+2. **日志记录**: 记录错误但不显示给用户
+
+## 📋 代码质量
+
+### 提交规范
+- 使用 Conventional Commits 格式
+- 通过 Husky + lint-staged 确保代码质量
+- 提交前自动运行 ESLint + Prettier
+
+### 文档规范
+- 复杂函数添加 JSDoc 注释
+- README 保持更新
+- API 接口要有完整的类型定义
+
+## 🎯 最佳实践总结
+
+1. **组件设计**: 单一职责，高内聚低耦合
+2. **类型安全**: 充分利用 TypeScript 类型系统
+3. **用户体验**: 加载状态、错误提示、响应式设计
+4. **性能优化**: 避免不必要的重渲染和网络请求
+5. **代码复用**: 提取公共组件和工具函数
+6. **错误处理**: 完善的错误边界和用户友好的错误提示
+
+遵循这些规范，确保代码质量和开发效率！
+
