@@ -1,1 +1,0 @@
-这是一个测试文件，用于验证git commit自动调起commitizen交互式界面的功能。 
