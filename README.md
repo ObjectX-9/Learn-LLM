@@ -1,24 +1,63 @@
-# LangChain 测试平台
+# LangChain Test Platform
 
-一个用于系统化测试 LangChain 各种功能的 Next.js 应用程序。
+这是一个基于Next.js的LangChain测试平台。
 
 ## 功能特性
 
-### 🚀 基础功能
-- **简单对话** - 测试基础的LLM对话功能
-- **提示词模板** - 学习和测试各种提示词
-- **流式输出** - 体验实时响应效果
+- 🎯 支持多种AI模型测试
+- 📝 智能对话功能
+- 🔧 RAG（检索增强生成）支持
+- ⚙️ 灵活的配置选项
 
-### 🤖 高级功能  
-- **RAG问答** - 检索增强生成技术
-- **Agent代理** - 智能代理和自动化
-- **工具调用** - 函数调用和外部工具
-- **工作流** - 复杂的多步骤流程
+## 开发规范
 
-### 📊 数据处理
-- **向量数据库** - 向量存储和语义检索
-- **文档处理** - 文档解析和分析
-- **记忆管理** - 对话记忆和上下文维护
+### Git提交规范
+
+项目已配置commitlint，支持以下commit类型：
+
+- `feat`: ✨ 新功能
+- `fix`: 🐛 修复bug
+- `docs`: 📝 文档更新
+- `style`: 💄 代码格式（不影响功能）
+- `refactor`: ♻️ 重构
+- `perf`: ⚡ 性能优化
+- `test`: ✅ 增加测试
+- `build`: 📦 构建相关
+- `ci`: 🎡 CI配置
+- `chore`: 🔧 其他更改
+- `revert`: ⏪ 回滚
+- `wip`: 🚧 开发中
+
+### 使用交互式提交
+
+```bash
+# 使用交互式提交工具
+pnpm run commit
+
+# 重试上次失败的提交
+pnpm run commit:retry
+```
+
+### 开发命令
+
+```bash
+# 开发
+pnpm dev
+
+# 构建
+pnpm build
+
+# 代码检查
+pnpm lint
+pnpm run lint:fix
+
+# 代码格式化
+pnpm run format
+pnpm run format:check
+
+# 类型检查
+pnpm run type-check
+```
 
 ## 技术栈
 
