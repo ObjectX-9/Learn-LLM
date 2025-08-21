@@ -1,0 +1,13 @@
+#!/bin/sh
+
+# 检查是否是普通的commit（不是merge、squash等特殊情况）
+# $2 参数表示commit的来源，如果为空则是普通commit
+if [ -z "$2" ]; then
+  # 检查是否已经有commit信息（避免在amend时重复调用）
+  if [ ! -s "$1" ] || grep -q "^# Please enter the commit message" "$1"; then
+    # 清空默认的commit信息模板
+    > "$1"
+    # 调用commitizen
+    exec < /dev/tty && npx git-cz --hook || true
+  fi
+fi 

@@ -14,6 +14,7 @@
     "pre-commit": "lint-staged",
     "commit": "git-cz",
     "commit:retry": "git-cz --retry",
+    "commit:manual": "git add . && git commit",
     "prepare": "husky"
   },
   "dependencies": {
