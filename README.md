@@ -30,9 +30,19 @@
 
 ### 使用交互式提交
 
+现在有三种方式使用交互式提交：
+
 ```bash
-# 使用交互式提交工具
+# 方式一：直接使用git commit（推荐）
+# 会自动调起commitizen交互式界面
+git add .
+git commit
+
+# 方式二：使用npm脚本
 pnpm run commit
+
+# 方式三：快捷命令（自动add并commit）
+pnpm run commit:manual
 
 # 重试上次失败的提交
 pnpm run commit:retry
