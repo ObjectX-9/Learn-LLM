@@ -27,6 +27,7 @@ import {
   Package,
   Radio,
   Wifi,
+  Clock,
 } from 'lucide-react';
 import { useState } from 'react';
 
@@ -131,6 +132,12 @@ const navigationItems = [
             href: '/streaming/chunked',
             icon: Package,
             description: 'HTTP分块传输编码演示',
+          },
+          {
+            name: 'Long Polling',
+            href: '/streaming/long-polling',
+            icon: Clock,
+            description: 'HTTP长轮询实时通信演示',
           },
         ],
       },
