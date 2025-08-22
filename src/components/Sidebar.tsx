@@ -117,6 +117,12 @@ const navigationItems = [
             icon: Zap,
             description: 'SSE实时推送演示',
           },
+          {
+            name: 'WebSocket',
+            href: '/streaming/socket',
+            icon: Zap,
+            description: 'WebSocket双向通信演示',
+          },
         ],
       },
     ],

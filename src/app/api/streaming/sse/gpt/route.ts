@@ -16,7 +16,7 @@ export async function GET(request: NextRequest) {
     searchParams.get('system') ||
     'You are a helpful AI assistant. Respond in a conversational and friendly manner.';
   const temperature = parseFloat(searchParams.get('temperature') || '0.7');
-  const modelName = searchParams.get('model') || 'gpt-3.5-turbo';
+  const modelName = searchParams.get('model') || 'ge-2.5-flash-thinking';
 
   console.log('📝 用户消息:', userMessage);
   console.log('🤖 模型:', modelName);
@@ -47,6 +47,7 @@ export async function GET(request: NextRequest) {
           configuration: {
             baseURL: process.env.OPEN_API_BASE_URL,
           },
+          verbose: true,
         });
 
         // 创建聊天提示模板
