@@ -1,0 +1,11 @@
+name,type,description,chunk_size,chunk_overlap,use_case
+TextLoader,文档加载器,处理纯文本文件,1000,200,基础文本文档
+PDFLoader,文档加载器,专业PDF内容提取,1500,300,学术论文和报告
+DocxLoader,文档加载器,Word文档格式支持,1200,250,商务文档
+CSVLoader,文档加载器,结构化数据处理,500,50,数据表格
+JSONLoader,文档加载器,JSON数据解析,800,100,配置文件和API数据
+CheerioWebBaseLoader,文档加载器,HTML内容解析,1000,200,网页内容
+RecursiveCharacterTextSplitter,文档分割器,智能递归分割,1000,200,通用文本处理
+TokenTextSplitter,文档分割器,基于Token的分割,1000,200,精确长度控制
+MarkdownTextSplitter,文档分割器,Markdown专用分割,1000,200,技术文档
+CharacterTextSplitter,文档分割器,简单字符分割,500,100,简单文本处理 

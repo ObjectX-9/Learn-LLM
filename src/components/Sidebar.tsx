@@ -30,6 +30,10 @@ import {
   Wand2,
   Compass,
   RotateCcw,
+  Package,
+  Radio,
+  Wifi,
+  Clock,
 } from 'lucide-react';
 import { useState } from 'react';
 
@@ -138,8 +142,26 @@ const navigationItems = [
           {
             name: 'Server-Sent Events',
             href: '/streaming/sse',
-            icon: Zap,
+            icon: Radio,
             description: 'SSE实时推送演示',
+          },
+          {
+            name: 'WebSocket',
+            href: '/streaming/socket',
+            icon: Wifi,
+            description: 'WebSocket双向通信演示',
+          },
+          {
+            name: 'Chunked Transfer',
+            href: '/streaming/chunked',
+            icon: Package,
+            description: 'HTTP分块传输编码演示',
+          },
+          {
+            name: 'Long Polling',
+            href: '/streaming/long-polling',
+            icon: Clock,
+            description: 'HTTP长轮询实时通信演示',
           },
         ],
       },
@@ -201,7 +223,7 @@ const navigationItems = [
 
 export default function Sidebar() {
   const pathname = usePathname();
-  const [expandedItems, setExpandedItems] = useState<string[]>(['Prompt测试']); // 默认展开
+  const [expandedItems, setExpandedItems] = useState<string[]>(['流式输出']); // 默认展开流式输出
 
   const toggleExpanded = (itemName: string) => {
     setExpandedItems((prev) =>

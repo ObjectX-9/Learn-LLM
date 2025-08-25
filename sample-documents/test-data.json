@@ -1,0 +1,84 @@
+{
+  "title": "LangChain 文档处理系统测试数据",
+  "version": "1.0.0",
+  "description": "这是一个用于测试 LangChain JSONLoader 的样本数据文件",
+  "features": [
+    {
+      "name": "文档加载器",
+      "description": "支持多种文档格式的加载",
+      "types": ["TextLoader", "PDFLoader", "DocxLoader", "CSVLoader", "JSONLoader", "CheerioWebBaseLoader"],
+      "capabilities": {
+        "text": "处理纯文本文件",
+        "pdf": "提取PDF文档内容",
+        "docx": "解析Word文档",
+        "csv": "处理结构化数据",
+        "json": "解析JSON数据结构",
+        "html": "提取HTML内容"
+      }
+    },
+    {
+      "name": "文档分割器",
+      "description": "将文档分割成适合处理的片段",
+      "types": ["RecursiveCharacterTextSplitter", "TokenTextSplitter", "MarkdownTextSplitter", "CharacterTextSplitter"],
+      "parameters": {
+        "chunk_size": "分块大小，控制每个片段的长度",
+        "chunk_overlap": "重叠字符数，保持语义连贯性",
+        "separators": "分隔符列表，用于智能分割"
+      }
+    }
+  ],
+  "examples": [
+    {
+      "scenario": "学术论文处理",
+      "recommended_loader": "PDFLoader",
+      "recommended_splitter": "RecursiveCharacterTextSplitter",
+      "settings": {
+        "chunk_size": 1500,
+        "chunk_overlap": 300
+      }
+    },
+    {
+      "scenario": "技术文档处理",
+      "recommended_loader": "MarkdownLoader",
+      "recommended_splitter": "MarkdownTextSplitter",
+      "settings": {
+        "chunk_size": 1000,
+        "chunk_overlap": 200
+      }
+    },
+    {
+      "scenario": "数据文件处理",
+      "recommended_loader": "CSVLoader",
+      "recommended_splitter": "CharacterTextSplitter",
+      "settings": {
+        "chunk_size": 500,
+        "chunk_overlap": 50
+      }
+    }
+  ],
+  "advantages": {
+    "langchain_benefits": [
+      "专业化的文档处理工具",
+      "经过社区验证的可靠性",
+      "持续维护和更新",
+      "与主流LLM的良好集成",
+      "简洁易用的API设计"
+    ],
+    "fallback_support": {
+      "description": "智能降级处理机制",
+      "benefits": [
+        "即使缺少依赖也能工作",
+        "提供清晰的错误信息",
+        "自动选择备用方案",
+        "保持系统稳定性"
+      ]
+    }
+  },
+  "metadata": {
+    "created_by": "LangChain 文档处理系统",
+    "created_at": "2024-01-20",
+    "purpose": "测试JSONLoader功能",
+    "encoding": "UTF-8",
+    "size_estimate": "中等规模测试数据"
+  }
+} 

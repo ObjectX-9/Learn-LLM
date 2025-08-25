@@ -1,0 +1,102 @@
+# LangChain 文档处理测试
+
+这是一个用于测试 LangChain 文档加载器和分割器的示例文档。
+
+## 什么是 LangChain？
+
+LangChain 是一个开源框架，用于构建基于大型语言模型（LLM）的应用程序。它提供了一系列工具和组件，帮助开发者更容易地创建复杂的 AI 应用。
+
+### 主要特性
+
+1. **文档加载器 (Document Loaders)**
+   - TextLoader: 加载纯文本文件
+   - PDFLoader: 处理 PDF 文档
+   - DocxLoader: 处理 Word 文档
+   - CSVLoader: 处理 CSV 数据文件
+   - JSONLoader: 处理 JSON 数据
+
+2. **文档分割器 (Text Splitters)**
+   - RecursiveCharacterTextSplitter: 递归字符分割器
+   - TokenTextSplitter: 基于 Token 的分割器
+   - MarkdownTextSplitter: Markdown 专用分割器
+   - CharacterTextSplitter: 简单字符分割器
+
+3. **向量存储 (Vector Stores)**
+   - 支持多种向量数据库
+   - 高效的相似性搜索
+   - 可扩展的存储方案
+
+## 使用场景
+
+### 1. 检索增强生成 (RAG)
+LangChain 的文档处理功能在 RAG 系统中发挥重要作用：
+- 文档加载：使用合适的加载器读取各种格式文档
+- 文档分割：将大文档分割成适合处理的小块
+- 向量化：将文本转换为向量表示
+- 检索：基于查询找到相关文档片段
+
+### 2. 知识库构建
+通过 LangChain 可以构建强大的知识库系统：
+- 多格式文档支持
+- 智能内容分割
+- 高效检索机制
+
+### 3. 内容分析
+LangChain 还可以用于内容分析和处理：
+- 文档预处理
+- 结构化数据提取
+- 语义理解
+
+## 技术优势
+
+LangChain 相比自定义实现有以下优势：
+
+1. **专业化**：针对不同文档格式优化的加载器
+2. **可靠性**：经过大量测试和社区验证
+3. **维护性**：持续更新和改进
+4. **兼容性**：与主流 LLM 和向量数据库良好集成
+5. **易用性**：简洁的 API 设计
+
+## 最佳实践
+
+### 选择合适的加载器
+根据文档类型选择最佳的 LangChain 加载器：
+- 对于纯文本文件，使用 TextLoader
+- 对于 PDF 文档，使用 PDFLoader
+- 对于 Word 文档，使用 DocxLoader
+- 对于结构化数据，使用 CSVLoader 或 JSONLoader
+
+### 优化分割策略
+选择合适的分割器和参数：
+- chunk_size: 根据模型上下文长度调整
+- chunk_overlap: 保持语义连贯性
+- separators: 根据文档结构定制
+
+### 性能优化
+- 合理设置批处理大小
+- 使用缓存机制
+- 异步处理大量文档
+
+## 示例代码
+
+```python
+from langchain.document_loaders import TextLoader
+from langchain.text_splitter import RecursiveCharacterTextSplitter
+
+# 加载文档
+loader = TextLoader("document.txt")
+documents = loader.load()
+
+# 分割文档
+text_splitter = RecursiveCharacterTextSplitter(
+    chunk_size=1000,
+    chunk_overlap=200
+)
+chunks = text_splitter.split_documents(documents)
+```
+
+这样就完成了文档的加载和分割处理，为后续的向量化和检索做好准备。
+
+## 总结
+
+LangChain 提供了强大而灵活的文档处理能力，是构建现代 AI 应用的重要工具。通过使用官方的加载器和分割器，我们可以构建更可靠、更高效的文档处理系统。 
