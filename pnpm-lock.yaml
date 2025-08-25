@@ -10,13 +10,13 @@ importers:
     dependencies:
       '@langchain/community':
         specifier: ^0.3.53
-        version: 0.3.53(@browserbasehq/sdk@2.6.0)(@browserbasehq/stagehand@1.14.0(@playwright/test@1.55.0)(deepmerge@4.3.1)(dotenv@16.6.1)(openai@5.13.1(ws@8.18.3)(zod@3.25.76))(zod@3.25.76))(@ibm-cloud/watsonx-ai@1.6.10)(@langchain/core@0.3.72(openai@5.13.1(ws@8.18.3)(zod@3.25.76)))(axios@1.11.0)(ibm-cloud-sdk-core@5.4.2)(ignore@5.3.2)(jsonwebtoken@9.0.2)(lodash@4.17.21)(mammoth@1.10.0)(openai@5.13.1(ws@8.18.3)(zod@3.25.76))(pdf-parse@1.1.1)(playwright@1.55.0)(weaviate-client@3.8.0)(ws@8.18.3)
+        version: 0.3.53(@browserbasehq/sdk@2.6.0)(@browserbasehq/stagehand@1.14.0(@playwright/test@1.55.0)(deepmerge@4.3.1)(dotenv@16.6.1)(openai@5.13.1(ws@8.18.3)(zod@4.1.1))(zod@4.1.1))(@ibm-cloud/watsonx-ai@1.6.10)(@langchain/core@0.3.72(openai@5.13.1(ws@8.18.3)(zod@4.1.1)))(axios@1.11.0)(ibm-cloud-sdk-core@5.4.2)(ignore@5.3.2)(jsonwebtoken@9.0.2)(lodash@4.17.21)(mammoth@1.10.0)(openai@5.13.1(ws@8.18.3)(zod@4.1.1))(pdf-parse@1.1.1)(playwright@1.55.0)(weaviate-client@3.8.0)(ws@8.18.3)
       '@langchain/core':
         specifier: ^0.3.15
-        version: 0.3.72(openai@5.13.1(ws@8.18.3)(zod@3.25.76))
+        version: 0.3.72(openai@5.13.1(ws@8.18.3)(zod@4.1.1))
       '@langchain/openai':
         specifier: ^0.3.9
-        version: 0.3.17(@langchain/core@0.3.72(openai@5.13.1(ws@8.18.3)(zod@3.25.76)))(ws@8.18.3)
+        version: 0.3.17(@langchain/core@0.3.72(openai@5.13.1(ws@8.18.3)(zod@4.1.1)))(ws@8.18.3)
       '@radix-ui/react-label':
         specifier: ^2.1.7
         version: 2.1.7(@types/react-dom@18.3.7(@types/react@18.3.23))(@types/react@18.3.23)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -37,7 +37,7 @@ importers:
         version: 2.1.1
       langchain:
         specifier: ^0.3.5
-        version: 0.3.31(@langchain/core@0.3.72(openai@5.13.1(ws@8.18.3)(zod@3.25.76)))(axios@1.11.0)(openai@5.13.1(ws@8.18.3)(zod@3.25.76))(ws@8.18.3)
+        version: 0.3.31(@langchain/core@0.3.72(openai@5.13.1(ws@8.18.3)(zod@4.1.1)))(axios@1.11.0)(openai@5.13.1(ws@8.18.3)(zod@4.1.1))(ws@8.18.3)
       lucide-react:
         specifier: ^0.446.0
         version: 0.446.0(react@18.3.1)
@@ -68,6 +68,9 @@ importers:
       ws:
         specifier: ^8.18.3
         version: 8.18.3
+      zod:
+        specifier: ^4.1.1
+        version: 4.1.1
     devDependencies:
       '@commitlint/cli':
         specifier: ^19.8.1
@@ -4403,6 +4406,9 @@ packages:
   zod@3.25.76:
     resolution: {integrity: sha512-gzUt/qt81nXsFGKIFcC3YnfEAx5NkunCfnDlvuBSSFS02bcXu4Lmea0AFIUwbLWxWPx3d9p8S5QoaujKcNQxcQ==}
 
+  zod@4.1.1:
+    resolution: {integrity: sha512-SgMZK/h8Tigt9nnKkfJMvB/mKjiJXaX26xegP4sa+0wHIFVFWVlsQGdhklDmuargBD3Hsi3rsQRIzwJIhTPJHA==}
+
   zwitch@2.0.4:
     resolution: {integrity: sha512-bXE4cR/kVZhKZX/RjPEflHaKVhUVl85noU3v6b8apfQEc1x4A+zBxjZ4lN8LqGd6WZ3dl98pY4o717VFmoPp+A==}
 
@@ -4442,17 +4448,17 @@ snapshots:
     transitivePeerDependencies:
       - encoding
 
-  '@browserbasehq/stagehand@1.14.0(@playwright/test@1.55.0)(deepmerge@4.3.1)(dotenv@16.6.1)(openai@5.13.1(ws@8.18.3)(zod@3.25.76))(zod@3.25.76)':
+  '@browserbasehq/stagehand@1.14.0(@playwright/test@1.55.0)(deepmerge@4.3.1)(dotenv@16.6.1)(openai@5.13.1(ws@8.18.3)(zod@4.1.1))(zod@4.1.1)':
     dependencies:
       '@anthropic-ai/sdk': 0.27.3
       '@browserbasehq/sdk': 2.6.0
       '@playwright/test': 1.55.0
       deepmerge: 4.3.1
       dotenv: 16.6.1
-      openai: 5.13.1(ws@8.18.3)(zod@3.25.76)
+      openai: 5.13.1(ws@8.18.3)(zod@4.1.1)
       ws: 8.18.3
-      zod: 3.25.76
-      zod-to-json-schema: 3.24.6(zod@3.25.76)
+      zod: 4.1.1
+      zod-to-json-schema: 3.24.6(zod@4.1.1)
     transitivePeerDependencies:
       - bufferutil
       - encoding
@@ -4703,21 +4709,21 @@ snapshots:
 
   '@js-sdsl/ordered-map@4.4.2': {}
 
-  '@langchain/community@0.3.53(@browserbasehq/sdk@2.6.0)(@browserbasehq/stagehand@1.14.0(@playwright/test@1.55.0)(deepmerge@4.3.1)(dotenv@16.6.1)(openai@5.13.1(ws@8.18.3)(zod@3.25.76))(zod@3.25.76))(@ibm-cloud/watsonx-ai@1.6.10)(@langchain/core@0.3.72(openai@5.13.1(ws@8.18.3)(zod@3.25.76)))(axios@1.11.0)(ibm-cloud-sdk-core@5.4.2)(ignore@5.3.2)(jsonwebtoken@9.0.2)(lodash@4.17.21)(mammoth@1.10.0)(openai@5.13.1(ws@8.18.3)(zod@3.25.76))(pdf-parse@1.1.1)(playwright@1.55.0)(weaviate-client@3.8.0)(ws@8.18.3)':
+  '@langchain/community@0.3.53(@browserbasehq/sdk@2.6.0)(@browserbasehq/stagehand@1.14.0(@playwright/test@1.55.0)(deepmerge@4.3.1)(dotenv@16.6.1)(openai@5.13.1(ws@8.18.3)(zod@4.1.1))(zod@4.1.1))(@ibm-cloud/watsonx-ai@1.6.10)(@langchain/core@0.3.72(openai@5.13.1(ws@8.18.3)(zod@4.1.1)))(axios@1.11.0)(ibm-cloud-sdk-core@5.4.2)(ignore@5.3.2)(jsonwebtoken@9.0.2)(lodash@4.17.21)(mammoth@1.10.0)(openai@5.13.1(ws@8.18.3)(zod@4.1.1))(pdf-parse@1.1.1)(playwright@1.55.0)(weaviate-client@3.8.0)(ws@8.18.3)':
     dependencies:
-      '@browserbasehq/stagehand': 1.14.0(@playwright/test@1.55.0)(deepmerge@4.3.1)(dotenv@16.6.1)(openai@5.13.1(ws@8.18.3)(zod@3.25.76))(zod@3.25.76)
+      '@browserbasehq/stagehand': 1.14.0(@playwright/test@1.55.0)(deepmerge@4.3.1)(dotenv@16.6.1)(openai@5.13.1(ws@8.18.3)(zod@4.1.1))(zod@4.1.1)
       '@ibm-cloud/watsonx-ai': 1.6.10
-      '@langchain/core': 0.3.72(openai@5.13.1(ws@8.18.3)(zod@3.25.76))
-      '@langchain/openai': 0.3.17(@langchain/core@0.3.72(openai@5.13.1(ws@8.18.3)(zod@3.25.76)))(ws@8.18.3)
-      '@langchain/weaviate': 0.2.2(@langchain/core@0.3.72(openai@5.13.1(ws@8.18.3)(zod@3.25.76)))
+      '@langchain/core': 0.3.72(openai@5.13.1(ws@8.18.3)(zod@4.1.1))
+      '@langchain/openai': 0.3.17(@langchain/core@0.3.72(openai@5.13.1(ws@8.18.3)(zod@4.1.1)))(ws@8.18.3)
+      '@langchain/weaviate': 0.2.2(@langchain/core@0.3.72(openai@5.13.1(ws@8.18.3)(zod@4.1.1)))
       binary-extensions: 2.3.0
       expr-eval: 2.0.2
       flat: 5.0.2
       ibm-cloud-sdk-core: 5.4.2
       js-yaml: 4.1.0
-      langchain: 0.3.31(@langchain/core@0.3.72(openai@5.13.1(ws@8.18.3)(zod@3.25.76)))(axios@1.11.0)(openai@5.13.1(ws@8.18.3)(zod@3.25.76))(ws@8.18.3)
-      langsmith: 0.3.62(openai@5.13.1(ws@8.18.3)(zod@3.25.76))
-      openai: 5.13.1(ws@8.18.3)(zod@3.25.76)
+      langchain: 0.3.31(@langchain/core@0.3.72(openai@5.13.1(ws@8.18.3)(zod@4.1.1)))(axios@1.11.0)(openai@5.13.1(ws@8.18.3)(zod@4.1.1))(ws@8.18.3)
+      langsmith: 0.3.62(openai@5.13.1(ws@8.18.3)(zod@4.1.1))
+      openai: 5.13.1(ws@8.18.3)(zod@4.1.1)
       uuid: 10.0.0
       zod: 3.25.76
     optionalDependencies:
@@ -4751,14 +4757,14 @@ snapshots:
       - handlebars
       - peggy
 
-  '@langchain/core@0.3.72(openai@5.13.1(ws@8.18.3)(zod@3.25.76))':
+  '@langchain/core@0.3.72(openai@5.13.1(ws@8.18.3)(zod@4.1.1))':
     dependencies:
       '@cfworker/json-schema': 4.1.1
       ansi-styles: 5.2.0
       camelcase: 6.3.0
       decamelize: 1.2.0
       js-tiktoken: 1.0.21
-      langsmith: 0.3.62(openai@5.13.1(ws@8.18.3)(zod@3.25.76))
+      langsmith: 0.3.62(openai@5.13.1(ws@8.18.3)(zod@4.1.1))
       mustache: 4.2.0
       p-queue: 6.6.2
       p-retry: 4.6.2
@@ -4771,9 +4777,9 @@ snapshots:
       - '@opentelemetry/sdk-trace-base'
       - openai
 
-  '@langchain/openai@0.3.17(@langchain/core@0.3.72(openai@5.13.1(ws@8.18.3)(zod@3.25.76)))(ws@8.18.3)':
+  '@langchain/openai@0.3.17(@langchain/core@0.3.72(openai@5.13.1(ws@8.18.3)(zod@4.1.1)))(ws@8.18.3)':
     dependencies:
-      '@langchain/core': 0.3.72(openai@5.13.1(ws@8.18.3)(zod@3.25.76))
+      '@langchain/core': 0.3.72(openai@5.13.1(ws@8.18.3)(zod@4.1.1))
       js-tiktoken: 1.0.21
       openai: 4.104.0(ws@8.18.3)(zod@3.25.76)
       zod: 3.25.76
@@ -4782,14 +4788,14 @@ snapshots:
       - encoding
       - ws
 
-  '@langchain/textsplitters@0.1.0(@langchain/core@0.3.72(openai@5.13.1(ws@8.18.3)(zod@3.25.76)))':
+  '@langchain/textsplitters@0.1.0(@langchain/core@0.3.72(openai@5.13.1(ws@8.18.3)(zod@4.1.1)))':
     dependencies:
-      '@langchain/core': 0.3.72(openai@5.13.1(ws@8.18.3)(zod@3.25.76))
+      '@langchain/core': 0.3.72(openai@5.13.1(ws@8.18.3)(zod@4.1.1))
       js-tiktoken: 1.0.21
 
-  '@langchain/weaviate@0.2.2(@langchain/core@0.3.72(openai@5.13.1(ws@8.18.3)(zod@3.25.76)))':
+  '@langchain/weaviate@0.2.2(@langchain/core@0.3.72(openai@5.13.1(ws@8.18.3)(zod@4.1.1)))':
     dependencies:
-      '@langchain/core': 0.3.72(openai@5.13.1(ws@8.18.3)(zod@3.25.76))
+      '@langchain/core': 0.3.72(openai@5.13.1(ws@8.18.3)(zod@4.1.1))
       uuid: 10.0.0
       weaviate-client: 3.8.0
     transitivePeerDependencies:
@@ -7092,15 +7098,15 @@ snapshots:
     dependencies:
       json-buffer: 3.0.1
 
-  langchain@0.3.31(@langchain/core@0.3.72(openai@5.13.1(ws@8.18.3)(zod@3.25.76)))(axios@1.11.0)(openai@5.13.1(ws@8.18.3)(zod@3.25.76))(ws@8.18.3):
+  langchain@0.3.31(@langchain/core@0.3.72(openai@5.13.1(ws@8.18.3)(zod@4.1.1)))(axios@1.11.0)(openai@5.13.1(ws@8.18.3)(zod@4.1.1))(ws@8.18.3):
     dependencies:
-      '@langchain/core': 0.3.72(openai@5.13.1(ws@8.18.3)(zod@3.25.76))
-      '@langchain/openai': 0.3.17(@langchain/core@0.3.72(openai@5.13.1(ws@8.18.3)(zod@3.25.76)))(ws@8.18.3)
-      '@langchain/textsplitters': 0.1.0(@langchain/core@0.3.72(openai@5.13.1(ws@8.18.3)(zod@3.25.76)))
+      '@langchain/core': 0.3.72(openai@5.13.1(ws@8.18.3)(zod@4.1.1))
+      '@langchain/openai': 0.3.17(@langchain/core@0.3.72(openai@5.13.1(ws@8.18.3)(zod@4.1.1)))(ws@8.18.3)
+      '@langchain/textsplitters': 0.1.0(@langchain/core@0.3.72(openai@5.13.1(ws@8.18.3)(zod@4.1.1)))
       js-tiktoken: 1.0.21
       js-yaml: 4.1.0
       jsonpointer: 5.0.1
-      langsmith: 0.3.62(openai@5.13.1(ws@8.18.3)(zod@3.25.76))
+      langsmith: 0.3.62(openai@5.13.1(ws@8.18.3)(zod@4.1.1))
       openapi-types: 12.1.3
       p-retry: 4.6.2
       uuid: 10.0.0
@@ -7116,7 +7122,7 @@ snapshots:
       - openai
       - ws
 
-  langsmith@0.3.62(openai@5.13.1(ws@8.18.3)(zod@3.25.76)):
+  langsmith@0.3.62(openai@5.13.1(ws@8.18.3)(zod@4.1.1)):
     dependencies:
       '@types/uuid': 10.0.0
       chalk: 4.1.2
@@ -7126,7 +7132,7 @@ snapshots:
       semver: 7.7.2
       uuid: 10.0.0
     optionalDependencies:
-      openai: 5.13.1(ws@8.18.3)(zod@3.25.76)
+      openai: 5.13.1(ws@8.18.3)(zod@4.1.1)
 
   language-subtag-registry@0.3.23: {}
 
@@ -7830,10 +7836,10 @@ snapshots:
     transitivePeerDependencies:
       - encoding
 
-  openai@5.13.1(ws@8.18.3)(zod@3.25.76):
+  openai@5.13.1(ws@8.18.3)(zod@4.1.1):
     optionalDependencies:
       ws: 8.18.3
-      zod: 3.25.76
+      zod: 4.1.1
 
   openapi-types@12.1.3: {}
 
@@ -9011,6 +9017,12 @@ snapshots:
     dependencies:
       zod: 3.25.76
 
+  zod-to-json-schema@3.24.6(zod@4.1.1):
+    dependencies:
+      zod: 4.1.1
+
   zod@3.25.76: {}
+
+  zod@4.1.1: {}
 
   zwitch@2.0.4: {}
